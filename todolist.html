@@ -142,9 +142,10 @@
     </script>
 </head>
 
-<body>
-    <h1 style="text-align: center">To Do List</h1>
+<body style="background-color: blanchedalmond">
+    <h1 style="text-align: center; color: blueviolet">To Do List</h1>
     <hr>
+    <br>
     <table id="tbl" border="1">
         <!-- table -->
         <thead>
@@ -171,13 +172,20 @@
     <br>
     <!-- list에 추가할 정보를 입력받음 -->
     <form action="/add" method="post">
-        <fieldset style="width: 400px; height: 180px;">
+        <fieldset style="width: 380px; height: 170px; background-color: aliceblue">
             <legend>추가항목</legend>
             priority &nbsp;&nbsp;&nbsp;<input type="text" size="40" name="prio" id="pr" placeholder="(integer)"><br>
-            duedate &nbsp;&nbsp;<input type="text" size="40" name="duedate" id="du" placeholder="(ex>2018-01-01)"><br>
+            duedate&nbsp;&nbsp;&nbsp;<input type="text" size="40" name="duedate" id="du" placeholder="(ex>2018-01-01)"><br>
             title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="40" name="title" id="ti"><br>
             content &nbsp;&nbsp;<input type="text" size="40" name="content" id="co"><br>
             <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <input type="button" value="추가" onclick="add()">
         </fieldset>
     </form>
