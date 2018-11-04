@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <title>To Do List</title>
     <link rel="stylesheet" href="css/bootstrap.css">
-    
+
     <script>
-        
+
         var cnt = 0;
         var myrow = new Array();
-        
+
         // 출력
         function display() {
             // 이전 table을 지우고 새로 추가함
@@ -19,101 +19,95 @@
             par.removeChild(child);
             var newch = document.createElement("tbody");
             newch.setAttribute("id", "tb")
-            
+
             par.appendChild(newch);
 
             var now = new Date();
             var today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // 마감기한 비교를 위해 오늘 날짜를 저장
 
-          for(var i = 1; i <= cnt; i++){
-            var tb = document.getElementById("tb");
+            for (var i = 1; i <= cnt; i++) {
+                var tb = document.getElementById("tb");
 
-            // table에 추가할 row 생성
-            var row = tb.insertRow(tb.rows.length);
+                // table에 추가할 row 생성
+                var row = tb.insertRow(tb.rows.length);
 
-            // 추가될 row의 각 cell들 생성
-            var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-            var cell3 = row.insertCell(2);
-            var cell4 = row.insertCell(3);
-            var cell5 = row.insertCell(4);
-            var cell6 = row.insertCell(5);
-            var cell7 = row.insertCell(6);
-            var cell8 = row.insertCell(7);
-            
-            // 마감기한이 지난 경우 row를 회색으로 표시
-            var specificDate = new Date(myrow[i].due);
-            if(specificDate.getTime() < today.getTime()){
-                row.setAttribute('style', 'background-color: gray');
-                alert(today.getTime() + "diff" + specificDate.getTime());
+                // 추가될 row의 각 cell들 생성
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                var cell6 = row.insertCell(5);
+                var cell7 = row.insertCell(6);
+                var cell8 = row.insertCell(7);
+
+                // 마감기한이 지난 경우 row를 회색으로 표시
+                var specificDate = new Date(myrow[i].due);
+                if (specificDate.getTime() < today.getTime()) {
+                    row.setAttribute('style', 'background-color: gray');
+                }
+                cell1.setAttribute("style", "text-align: center");
+                cell2.setAttribute("style", "text-align: center");
+                cell3.setAttribute("style", "text-align: center");
+                cell4.setAttribute("style", "text-align: center");
+                cell5.setAttribute("style", "text-align: center");
+                cell6.setAttribute("style", "text-align: center");
+                cell7.setAttribute("style", "text-align: center");
+                cell8.setAttribute("style", "text-align: center");
+
+                // cell들에 innerHTML 값을 넣어줌
+                cell1.innerHTML = myrow[i].prio;
+                cell2.innerHTML = myrow[i].due;
+                cell3.innerHTML = myrow[i].ti;
+                cell4.innerHTML = myrow[i].co;
+                cell5.innerHTML = myrow[i].do;
+                cell6.innerHTML = "<button type='button' id='m" + i + "' onclick='mod()'>수정</button>"; // 해당 list의 수정 버튼
+                cell7.innerHTML = "<button type='button' id='d" + i + "' onclick='del()'>삭제</button>"; // 해당 list의 삭제 버튼
+                cell8.innerHTML = "<button type='button' id='f" + i + "' onclick='fin()'>완료</button>"; // 해당 list의 완료 버튼
+                document.getElementById("m" + i).onclick = mod;
+                document.getElementById("d" + i).onclick = del;
+                document.getElementById("f" + i).onclick = fin;
             }
-            cell1.setAttribute("style", "text-align: center");
-            cell2.setAttribute("style", "text-align: center");
-            cell3.setAttribute("style", "text-align: center");
-            cell4.setAttribute("style", "text-align: center");
-            cell5.setAttribute("style", "text-align: center");
-            cell6.setAttribute("style", "text-align: center");
-            cell7.setAttribute("style", "text-align: center");
-            cell8.setAttribute("style", "text-align: center");
-
-            // cell들에 innerHTML 값을 넣어줌
-            cell1.innerHTML = myrow[i].prio;
-            cell2.innerHTML = myrow[i].due;
-            cell3.innerHTML = myrow[i].ti;
-            cell4.innerHTML = myrow[i].co;
-            cell5.innerHTML = myrow[i].do;            
-            cell6.innerHTML = "<button type='button' id='m" + i + "' onclick='mod()'>수정</button>"; // 해당 list의 수정 버튼
-            cell7.innerHTML = "<button type='button' id='d" + i + "' onclick='del()'>삭제</button>"; // 해당 list의 삭제 버튼
-            cell8.innerHTML = "<button type='button' id='f" + i + "' onclick='fin()'>완료</button>"; // 해당 list의 완료 버튼
-            document.getElementById("m" + i).onclick = mod;
-            document.getElementById("d" + i).onclick = del;
-            document.getElementById("f" + i).onclick = fin;
-          }
         }
 
         // list 추가
-        function add(){
+        function add() {
             // list 개수가 하나 추가
             cnt++;
             // 입력받은 데이터들을 저장함
             var prio = document.getElementById("pr").value;
             var prionum = parseInt(prio);
-            if(prionum != prio){
-                alert("invalid input");
-                return;
-            }
             var duedate = document.getElementById("du").value;
             var title = document.getElementById("ti").value;
             var content = document.getElementById("co").value;
             var done = 0;
             // 저장한 데이터들을 새로운 객체에 넣음
-            myrow[cnt] = {prio: prionum, due: duedate, ti: title, co: content, do: done};
-            
+            myrow[cnt] = { prio: prionum, due: duedate, ti: title, co: content, do: done };
+
             // prio(우선순위) 값을 기준으로 객체 배열을 정렬
-            for(var i = 1; i <= cnt; i++){
-                for(var j = 1; j <= cnt-i; j++){
-                    if(myrow[j].prio > myrow[j+1].prio){
-                        var tmp = myrow[j+1];
-                        myrow[j+1] = myrow[j];
+            for (var i = 1; i <= cnt; i++) {
+                for (var j = 1; j <= cnt - i; j++) {
+                    if (myrow[j].prio > myrow[j + 1].prio) {
+                        var tmp = myrow[j + 1];
+                        myrow[j + 1] = myrow[j];
                         myrow[j] = tmp;
                     }
                 }
             }
-            
             display();
         }
-        
+
         // list 삭제
         function del() {
             // 삭제 버튼을 누를시 해당 list를 지우고 그 자리를 뒤의 list들로 채움
             var a = this.id;
             var idx = parseInt(a[1]);
-            for(var i = idx; i < cnt; i++){
-                myrow[i].prio = myrow[i+1].prio;
-                myrow[i].due = myrow[i+1].due;
-                myrow[i].ti = myrow[i+1].ti;
-                myrow[i].co = myrow[i+1].co;
-                myrow[i].do = myrow[i+1].do;
+            for (var i = idx; i < cnt; i++) {
+                myrow[i].prio = myrow[i + 1].prio;
+                myrow[i].due = myrow[i + 1].due;
+                myrow[i].ti = myrow[i + 1].ti;
+                myrow[i].co = myrow[i + 1].co;
+                myrow[i].do = myrow[i + 1].do;
             }
             // 객체 개수 1 감소
             cnt--;
@@ -138,7 +132,7 @@
         }
 
         // 완료
-        function fin() { 
+        function fin() {
             // 완료 버튼을 누를시 해당 list를 수행했다고 do 속성을 이용하여 표시
             var a = this.id;
             var idx = parseInt(a[1]);
@@ -149,15 +143,16 @@
 </head>
 
 <body>
-    <h1 class="text-center">To Do List</h1>
+    <h1 style="text-align: center">To Do List</h1>
     <hr>
-    <table id="tbl" border="1"> <!-- table -->
+    <table id="tbl" border="1">
+        <!-- table -->
         <thead>
             <tr>
                 <th style="width: 40px; text-align: center">priority</th>
                 <th style="width: 150px; text-align: center">due date</th>
-                <th style="width: 200px; word-break: break-all;" class="text-center">title</th>
-                <th style="width: 400px; word-break: break-all;" class="text-center">content</th>
+                <th style="width: 300px; word-break: break-all;" class="text-center">title</th>
+                <th style="width: 600px; word-break: break-all;" class="text-center">content</th>
                 <th style="width: 40px; text-align: center">done</th>
                 <th style="width: 47px; text-align: center">수정</th>
                 <th style="width: 47px; text-align: center">삭제</th>
@@ -171,16 +166,20 @@
     <br>
     <br>
     <br>
+    <br>
+    <br>
+    <br>
     <!-- list에 추가할 정보를 입력받음 -->
     <form action="/add" method="post">
-        <fieldset style="width: 500px; height: 150px;">
+        <fieldset style="width: 400px; height: 180px;">
             <legend>추가항목</legend>
             priority &nbsp;&nbsp;&nbsp;<input type="text" size="40" name="prio" id="pr" placeholder="(integer)"><br>
             duedate &nbsp;&nbsp;<input type="text" size="40" name="duedate" id="du" placeholder="(ex>2018-01-01)"><br>
             title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" size="40" name="title" id="ti"><br>
             content &nbsp;&nbsp;<input type="text" size="40" name="content" id="co"><br>
+            <br>
             <input type="button" value="추가" onclick="add()">
-        </fieldset>   
+        </fieldset>
     </form>
 
 
